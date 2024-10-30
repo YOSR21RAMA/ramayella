@@ -1,0 +1,221 @@
+/*
+ * 2003 - 2018 Business Tech
+ *
+ *  @author    Business Tech SARL <http://www.businesstech.fr/en/contact-us>
+ *  @copyright 2003 - 2018 Business Tech SARL
+ */
+// declare main object of module
+var BT_GAnalyticsPro = function(sName){
+	// set name
+	this.name = sName;
+
+	// set translated js msgs
+	this.msgs = {};
+
+	// stock error array
+	this.aError = [];
+
+	// stock parameters array
+	this.aParameters = [];
+
+	// set url of module's web service
+	this.sWebService = '';
+
+	// set this in obj context
+	var oThis = this;
+
+	/**
+	 * init() method init the GA object
+	 *
+	 * @param string js : string of JS code formatted into the PHP library => xxxx-analytics_class.php
+	 */
+	this.init = function(js) {
+		eval(js)
+	};
+
+
+	/**
+	 * productClickView() method handle a product click view event
+	 *
+	 * @param obj product : product as obj
+	 * @param string sLabel : used for the label => come from the server to get the translation value
+	 * @param string sList : used for the list => identify the current label page
+	 */
+	this.productClickView = function(product, sLabel, sList) {
+		var oClickView = jQuery('a[href^="' + product.url + '"].quick-view');
+		var oClickViewMobile = jQuery('a[href^="' + product.url + '"].quick-view-mobile');
+
+		oClickView.on('click', function() {
+			delete product.url;
+			oThis.addProductClick(product, sLabel, sList);
+		});
+		oClickViewMobile.on('click', function() {
+			delete product.url;
+			oThis.addProductClick(product, sLabel, sList);
+		});
+	};
+
+
+	/**
+	 * productClick() method handle a product click event with the detailed selector
+	 *
+	 * @param obj product : product as obj
+	 * @param string sLabel : used for the label => come from the server to get the translation value
+	 * @param string sList : used for the list => identify the current label page
+	 */
+	this.productClick = function(product, sLabel, sList) {
+		var oClick = jQuery('a[href^="' + product.url + '"][class!="quick-view"][class!="quick-view-mobile"]');
+
+		oClick.on('click', function() {
+			delete product.url;
+			oThis.addProductClick(product, sLabel, sList);
+		});
+	};
+
+
+	/**
+	 * productClickSelector() method handle a product click event with a large selector
+	 *
+	 * @param string selector : select HTML elt
+	 * @param string findLink : selector to find link near to the related product concerned by the click
+	 * @param array findId : selector to find product ID located by the data-product-id included before in the template files by the merchant
+	 * @param array productsPos : identify the product position from products templates vars
+	 * @param string sParams : to execute the ajax request
+	 */
+	this.productClickSelector = function(selector, findLink, findId, productsPos, sParams) {
+		// product click action - trace all the clicks on product detail
+		$(document).on('click', selector, function(e) {
+			// retrieve the product link
+			var sLink = eval(findLink);
+			var iProductId = eval(findId[0]);
+
+			if (typeof iProductId == 'undefined') {
+				// get the product ID from the comparison page
+				iProductId = eval(findId[1]);
+			}
+
+			// stop redirection
+			e.preventDefault();
+			if (typeof sLink != 'undefined') {
+				// stop redirection
+				e.preventDefault();
+				if (typeof productsPos != 'undefined' && typeof iProductId != 'undefined') {
+					var productPosition = typeof productsPos[iProductId] != 'undefined'? productsPos[iProductId] : 1;
+					sParams += '&id=' + iProductId + '&position=' + productPosition + '&link=' + encodeURI(sLink);
+					oThis.ajax(sParams);
+				}
+				else {
+					oThis.error(2);
+					// redirect to page link to prevent error redirection
+					document.location = sLink;
+				}
+			}
+			else {
+				oThis.error(1);
+			}
+		});
+	};
+
+
+	/**
+	 * addProductClick() method handle a product click event
+	 *
+	 * @param obj product : product as obj
+	 * @param string sLabel : used for the label => come from the server to get the translation value
+	 * @param string sList : used for the list => identify the current label page
+	 * @param string sLink : used for the ajax action when this is the general selector executed
+	 */
+	this.addProductClick = function(product, sLabel, sList, sLink) {
+		// add product data
+		ga('ec:addProduct', product);
+
+		// set action list
+		ga('ec:setAction', 'click', {
+			list: sList
+		});
+
+		ga('send', 'event', 'UX', 'click', sLabel, {
+			'hitCallback': function() {
+				if (typeof sLink != 'undefined'
+					&& sLink != null
+					&& sLink != ''
+				) {
+					document.location = sLink;
+				}
+				else {
+					return !ga.loaded;
+				}
+			}
+		});
+	};
+
+
+	/**
+	 * checkoutOptions() method handle checkout options
+	 *
+	 * @param int iStep : number of page step
+	 * @param string sOptionName : checkout option
+	 * @param string sEventName : event name
+	 * @param string sLink : link to redirect
+	 */
+	this.checkoutOptions = function(iStep, sOptionName, sEventName, sLink) {
+		ga('ec:setAction', 'checkout_option', {
+			'step': iStep,
+			'option': sOptionName
+		});
+		
+		if (typeof sLink != 'undefined'
+			&& sLink != null
+			&& sLink != ''
+		) {
+			ga('send', 'event', 'Checkout', 'Option', sEventName, {
+				'hitCallback': function () {
+					//return false;
+					document.location = sLink;
+				}
+			});
+		}
+		else {
+			ga('send', 'event', 'Checkout', 'Option', sEventName);
+		}
+	};
+
+	/**
+	 * ajax() method execute XHR
+	 *
+	 * @param string sURI : query params used for XHR
+	 * @return string
+	 */
+	this.ajax = function(sParams){
+		sParams = 'sMode=xhr' + ((sParams == null || sParams == undefined) ? '' : '&' + sParams) ;
+
+		// configure XHR
+		$.ajax({
+			type : 'POST',
+			url : oThis.sWebService,
+			data : sParams,
+			dataType : 'json',
+			success: function(data) {
+				if (data.success == 1) {
+					eval(data.js);
+				}
+				else {
+					oThis.error(2);
+				}
+			},
+			error: function(xhr, sThrownError) {
+				console.log(xhr.statusText);
+				console.log(sThrownError);
+			}
+		});
+	};
+
+	/**
+	 * error() method handles error messages in the console
+	 *
+	 * @param int iErrorNo
+	 */
+	this.error = function(iErrorNo){
+		console.warn(this.msgs[iErrorNo]);
+	}
+};

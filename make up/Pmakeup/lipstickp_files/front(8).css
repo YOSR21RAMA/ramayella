@@ -1,0 +1,108 @@
+/**
+* 2007-2020 PrestaShop
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Academic Free License (AFL 3.0)
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/afl-3.0.php
+* If you did not receive a copy of the license and are unable to
+* obtain it through the world-wide-web, please send an email
+* to license@prestashop.com so we can send you a copy immediately.
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+* versions in the future. If you wish to customize PrestaShop for your
+* needs please refer to http://www.prestashop.com for more information.
+*
+*  @author    PrestaShop SA <contact@prestashop.com>
+*  @copyright 2007-2020 PrestaShop SA
+*  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+*  International Registered Trademark & Property of PrestaShop SA
+*/
+
+.tvtabcategory-product-sub-title-block .tvtabcategory-product-li.hide{
+    display: none;
+}
+.tvtabcategory-product-sub-title-block .tvtabcategory-show.show-hide{
+    display: block;
+}
+.tvtabcategory-product-sub-title-block .show-hide.hide{
+    display: none;
+}
+
+.tvtabcategory-tab-product .tvall-product-branner{
+	width: 100% !important;
+}
+
+.tvtabcategory-tab-product .tvimage-true{
+	width: 100% !important;
+}
+
+@media (max-width: 1199px){
+	.tvtabcategory-tab-product .tvall-product-branner{
+		width: 25%;
+	}
+
+	.tvtabcategory-tab-product .tvimage-true{
+		width: 75%;
+	}
+}
+
+@media (max-width: 991px){
+	.tvtabcategory-tab-product .tvall-product-branner{
+		width: 33.33%;
+	}
+
+	.tvtabcategory-tab-product .tvimage-true{
+		width: 66.66%;
+	}
+}
+
+
+@media (max-width: 650px){
+    .tvtabcategory-tab-product .tvall-product-branner {
+        width: 50%;
+    }
+    .tvtabcategory-tab-product .tvimage-true{
+		width: 50%;
+	}
+}
+
+@media (max-width: 590px){
+	.tvtabcategory-tab-product .tvall-product-branner{
+		width: 100%;
+	}
+
+	.tvtabcategory-tab-product .tvimage-true{
+		width: 100%;
+	}
+}
+
+
+.tvtabcategory-product-sub-title-block {
+    padding: 10px 10px 10px 10px;
+}
+
+.tvtabcategory-product-li.active a:not([href]):not([tabindex]),
+.tvtabcategory-product-li:hover a:not([href]):not([tabindex]),
+.tvtabcategory-show:hover a:not([href]):not([tabindex]),
+.tvtabcategory-hide:hover a:not([href]):not([tabindex]){
+	color: #c4a87a;	
+}
+
+.tvtabcategory-product-li:before{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	height: 1px;
+	width: 100%;
+	left: 0;
+	background-color: #f7f7f7;
+}
+
+.tvtabcategory-product-li:nth-child(8):before{
+	display: none;
+}

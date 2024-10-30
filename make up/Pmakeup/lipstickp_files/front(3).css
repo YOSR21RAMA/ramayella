@@ -1,0 +1,208 @@
+/**
+* 2007-2020 PrestaShop
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Academic Free License (AFL 3.0)
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/afl-3.0.php
+* If you did not receive a copy of the license and are unable to
+* obtain it through the world-wide-web, please send an email
+* to license@prestashop.com so we can send you a copy immediately.
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+* versions in the future. If you wish to customize PrestaShop for your
+* needs please refer to http://www.prestashop.com for more information.
+*
+*  @author PrestaShop SA <contact@prestashop.com>
+*  @copyright  2007-2020 PrestaShop SA
+*  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+*  International Registered Trademark & Property of PrestaShop SA
+*/
+
+.tvsingle-block {
+    text-align: left;
+}
+
+.tv-single-block-image {
+    display: inline-block;
+}
+.tv-single-block-content {
+    text-align: left;
+    /*padding: 165px 0;*/
+    /*left: 50%;*/
+    position: unset;
+    display: inline-block;
+}
+
+.tv-single-block-content-inner {
+    text-align: left;
+    padding-top: 50px;
+    position: relative;
+    /*box-shadow: 19px 19px 6px var(--box-shadow-color);*/
+    /*--box-shadow-color: #319be678;*/
+    /*background-color: rgba(95, 94, 94, .43);*/
+    /*-webkit-transform: skew(-205deg);
+    -o-transform: skew(-205deg);
+    -ms-transform: skew(-205deg);
+    -moz-transform: skew(-205deg);
+    transform: skew(-205deg);*/
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 50px;
+    margin: auto;
+}
+
+/*.tv-single-block-content-wrapper {
+    -webkit-transform: skew(205deg);
+    -o-transform: skew(205deg);
+    -ms-transform: skew(205deg);
+    -moz-transform: skew(205deg);
+    transform: skew(205deg);
+}*/
+
+.tv-single-block-content a {
+    color: #319be6;
+    position: relative;
+    font-size: 12px;
+    font-weight: 500;
+}
+.tv-single-block-content a i {
+    font-size: 15px;
+}
+
+.tv-single-block-content a:before {
+    content: '';
+    position: absolute;
+    background-color: #319be6;
+    height: 1px;
+    width: 100%;
+    display: none;
+    bottom: 0;
+}
+.tvcmssingle-block {
+    position: relative;
+}
+.tvcmssingle-block:before {
+    content: '';
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000b8;
+}
+
+@media (max-width: 1440px) {
+    
+    .tv-single-block-content h1 {
+        font-size: 27px !important;
+    }
+}
+
+@media (max-width: 1024px) {
+   
+    .tv-single-block-content h3:first-child {
+        font-size: 20px;
+    }
+    .tv-single-block-content h1 {
+        font-size: 21px !important;
+    }
+    .tv-single-block-content h3 {
+        font-size: 13px;
+        margin-bottom: 0;
+    }
+    .tvnews-event-titel h3{
+        font-size: 15px;
+    }
+}
+
+.tvcms-singleblock-link{
+    margin-top: 35px;
+}
+
+.tvcms-singleblock-link a{
+    background-color: #c4a87a;
+    padding: 8px 20px;
+    border-radius: 3px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.tvcms-singleblock-link:hover a{
+    background-color: #000;
+    color: #ffffff;
+}
+
+/*.tv-single-block-image img {
+    position: absolute;
+    top: -56px;
+    left: 0;
+}*/
+
+h2.tvcmssingleblock-title {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.tv-single-block-content-wrapper p {
+    text-align: left !important;
+}
+
+@media (min-width: 1024px) {
+    .tvsingle-block.container {
+        max-width: 1024px !important;
+    }
+}
+
+
+.tvcms-singleblock-link {
+    text-align: center;
+}
+
+.tvcms-singleblock-link a {
+    padding-inline: 40px;
+    color: white !important;
+}
+
+
+.tvsingle-block-mobile .tvsingle-block-mobile-text{
+    position: absolute;
+    top: 10vh;
+    color: white;
+    padding-inline: 50px;
+    font-size: 1rem;
+    line-height: 25px;
+
+}
+@media ((max-width: 460px) and (min-width:320px)) {
+    .tvsingle-block-mobile .tvsingle-block-mobile-text{
+        font-size: .7rem;
+        padding-inline: 20px;
+    }
+}
+.tvsingle-block-mobile img {
+    min-height: 220px;
+}
+
+span.primary-txt {
+    color: #e8d876 !important;
+    font-weight: 700 !important;
+}
+
+@media (max-width: 565px) {
+    .tvsingle-block {
+        display: none !important;
+    }
+}
+
+@media (min-width: 565px) {
+    .tvsingle-block-mobile {
+        display: none !important;
+    }
+}
